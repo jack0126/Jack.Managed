@@ -176,10 +176,16 @@ namespace Jack.Managed
                     throw new ManagedException($"component can't be null: {type.FullName}.{method.Name}().");
                 }
 
+                var componentType = component.GetType();
+                if (componentType.IsValueType)
+                {
+                    throw new ManagedException($"component must be a class object: {type.FullName}.{method.Name}().");
+                }
+
                 var attr = (ComponentAttribute)method.GetCustomAttribute(InternalCache.ComponentAttributeType, false);
                 if (attr != null)
                 {
-                    if (!componentManager.Add(component.GetType(), attr.Name, component))
+                    if (!componentManager.Add(componentType, attr.Name, component))
                     {
                         throw new ManagedException($"duplicate resource: at {type.FullName}.{method.Name}().");
                     }
