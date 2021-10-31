@@ -10,13 +10,13 @@ namespace Jack.Managed
     public class DateTimeVariable
     {
         private TextVariable variable;
+        private readonly string format;
+
         internal DateTimeVariable(TextVariable variable, string format = null)
         {
             this.variable = variable;
             this.format = format ?? "yyyy-MM-dd HH:mm:ss";
         }
-
-        private string format;
 
         public string Comment => variable.Comment;
 
