@@ -9,6 +9,7 @@ namespace Jack.Managed.Util
     class DefaultComponentManager : IContextComponentManager
     {
         private readonly Dictionary<string, List<NamedObject>> mapping = new Dictionary<string, List<NamedObject>>(8192);
+        private readonly List<NamedObject> components = new List<NamedObject>(1024);
         private readonly List<string> keysCache = new List<string>(32);
 
         public bool Add(Type type, string name, object instance)
@@ -19,7 +20,6 @@ namespace Jack.Managed.Util
             }
 
             var keys = keysCache;
-
             keys.Clear();
             keys.Add(type.FullName);
             keys.AddRange(type.GetInterfaces().Select(e => e.FullName).Where(n => !n.StartsWith("System.")));
@@ -39,6 +39,7 @@ namespace Jack.Managed.Util
             }
 
             var namedObject = new NamedObject(name ?? string.Empty, instance);
+            components.Add(namedObject);
 
             foreach (var key in keys)
             {
@@ -73,12 +74,9 @@ namespace Jack.Managed.Util
 
         public void ForEach(Action<string, object> action)
         {
-            foreach(var list in mapping.Values)
+            foreach(var item in components)
             {
-                foreach(var item in list)
-                {
-                    action(item.name, item.instance);
-                }
+                action(item.name, item.instance);
             }
         }
 

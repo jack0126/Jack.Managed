@@ -136,7 +136,7 @@ namespace Jack.Managed
             foreach (var method in componentMethods)
             {
                 object component;
-                #region call configuration method of Component or LineComponent
+                #region call configuration methods of Component or LineComponent
                 try
                 {
                     var parameters = method.GetParameters();
