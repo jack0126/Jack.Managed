@@ -17,13 +17,10 @@ namespace Jack.Managed
         
         internal ManagedContextStub(string environment)
         {
-            if (!string.IsNullOrEmpty(environment))
+            if (!string.IsNullOrEmpty(environment) && File.Exists(environment))
             {
-                if (File.Exists(environment))
-                {
-                    EnvironmentVariables = EnvironmentFile.Open(environment, Encoding.UTF8, true);
-                    CheckBackEnvironment(environment);
-                }
+                EnvironmentVariables = EnvironmentFile.Open(environment, Encoding.UTF8, true);
+                CheckBackEnvironment(environment);
             }
         }
 
@@ -63,14 +60,14 @@ namespace Jack.Managed
             var ConfigurationAttributeType = typeof(ConfigurationAttribute);
             
             var staticComponents = componentTypes.Where(type => type.IsDefined(StaticComponentAttributeType, false));
-            var linkComponents = new List<Tuple<LinkComponentAttribute, object>>(256);
+            var linkComponents = new List<Tuple<LinkComponentAttribute, object>>(1024);
 
             foreach(var type in componentTypes)
             {
-                if (type.IsDefined(ComponentAttributeType, true) && !type.IsAbstract)
+                if (type.IsDefined(ComponentAttributeType, false) && !type.IsAbstract)
                 {
                     #region find and load Component 
-                    var attr = (ComponentAttribute)type.GetCustomAttribute(ComponentAttributeType, true);
+                    var attr = (ComponentAttribute)type.GetCustomAttribute(ComponentAttributeType, false);
                     if (!componentManager.Add(type, attr.Name, Activator.CreateInstance(type)))
                     {
                         throw new ManagedException($"duplicate resource: {type.FullName}.");
