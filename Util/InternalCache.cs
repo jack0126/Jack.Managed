@@ -9,6 +9,7 @@ namespace Jack.Managed.Util
     static class InternalCache
     {
         internal static readonly Type AutoManagedComponentsAttributeType = typeof(AutoManagedComponentsAttribute);
+        internal static readonly Type NotComponentAttributeType = typeof(NotComponentAttribute);
         internal static readonly Type ComponentAttributeType = typeof(ComponentAttribute);
         internal static readonly Type LinkComponentAttributeType = typeof(LinkComponentAttribute);
         internal static readonly Type ConfigurationAttributeType = typeof(ConfigurationAttribute);
