@@ -21,12 +21,17 @@ namespace Jack.Managed
             }
         }
 
-        public static EnvironmentFile Open(string path, bool bindLocal = false)
+        public static EnvironmentFile Open(string path)
         {
             return Open(path, Encoding.UTF8);
         }
 
-        public static EnvironmentFile Open(string path, Encoding encoding, bool bindLocal= false)
+        public static EnvironmentFile Open(string path, Encoding encoding)
+        {
+            return Open(path, encoding, false);
+        }
+
+        internal static EnvironmentFile Open(string path, Encoding encoding, bool bindLocal)
         {
             var file = new EnvironmentFile(path);
             string comment = null;
