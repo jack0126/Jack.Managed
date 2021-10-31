@@ -9,7 +9,7 @@ namespace Jack.Managed
 {
     public class DateTimeVariable
     {
-        private TextVariable variable;
+        private readonly TextVariable variable;
         private readonly string format;
 
         internal DateTimeVariable(TextVariable variable, string format = null)

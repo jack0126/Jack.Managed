@@ -9,7 +9,7 @@ namespace Jack.Managed
 {
     public class LongVariable
     {
-        private TextVariable variable;
+        private readonly TextVariable variable;
         internal LongVariable(TextVariable variable)
         {
             this.variable = variable;

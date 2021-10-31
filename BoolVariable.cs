@@ -9,7 +9,7 @@ namespace Jack.Managed
 {
     public class BoolVariable
     {
-        private TextVariable variable;
+        private readonly TextVariable variable;
         internal BoolVariable(TextVariable variable)
         {
             this.variable = variable;

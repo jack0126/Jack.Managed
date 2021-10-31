@@ -9,7 +9,7 @@ namespace Jack.Managed
 {
     public class IntVariable
     {
-        private TextVariable variable;
+        private readonly TextVariable variable;
         internal IntVariable(TextVariable variable)
         {
             this.variable = variable;

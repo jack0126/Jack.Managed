@@ -9,7 +9,7 @@ namespace Jack.Managed
 {
     public class DecimalVariable
     {
-        private TextVariable variable;
+        private readonly TextVariable variable;
         internal DecimalVariable(TextVariable variable)
         {
             this.variable = variable;

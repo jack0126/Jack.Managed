@@ -9,7 +9,7 @@ namespace Jack.Managed
 {
     public class DoubleVariable
     {
-        private TextVariable variable;
+        private readonly TextVariable variable;
         internal DoubleVariable(TextVariable variable)
         {
             this.variable = variable;
