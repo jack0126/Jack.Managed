@@ -13,7 +13,6 @@ namespace Jack.Managed.Util
 
         public bool Add(Type type, string name, object instance)
         {
-            var namedObject = new NamedObject(name ?? string.Empty, instance);
             var keys = _tempKeysCacheAtAdd;
 
             keys.Clear();
@@ -33,7 +32,9 @@ namespace Jack.Managed.Util
                 keys.Add(fullName);
                 baseType = baseType.BaseType;
             }
-            
+
+            var namedObject = new NamedObject(name ?? string.Empty, instance);
+
             foreach (var key in keys)
             {
                 if (mapping.ContainsKey(key))
@@ -61,10 +62,7 @@ namespace Jack.Managed.Util
             }
 
             var list = mapping[key];
-            if (string.IsNullOrEmpty(name))
-            {
-                return list[0].instance;
-            }
+            name = name ?? string.Empty;
             return list.Find(e => name == e.name)?.instance;
         }
 
@@ -72,7 +70,10 @@ namespace Jack.Managed.Util
         {
             foreach(var list in mapping.Values)
             {
-                list.ForEach(e => action(e.name, e.instance));
+                foreach(var item in list)
+                {
+                    action(item.name, item.instance);
+                }
             }
         }
 
