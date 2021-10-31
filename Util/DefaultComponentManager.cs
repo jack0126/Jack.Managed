@@ -8,7 +8,7 @@ namespace Jack.Managed.Util
 {
     class DefaultComponentManager : IContextComponentManager
     {
-        private readonly Dictionary<string, List<NamedObject>> mapping = new Dictionary<string, List<NamedObject>>(4096);
+        private readonly Dictionary<string, List<NamedObject>> mapping = new Dictionary<string, List<NamedObject>>(8192);
         private readonly List<string> _tempKeysCacheAtAdd = new List<string>(32);
 
         public bool Add(Type type, string name, object instance)
