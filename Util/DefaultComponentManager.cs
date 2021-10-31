@@ -9,21 +9,31 @@ namespace Jack.Managed.Util
     class DefaultComponentManager : IContextComponentManager
     {
         private readonly Dictionary<string, List<NamedObject>> mapping = new Dictionary<string, List<NamedObject>>(4096);
+        private readonly List<string> _tempKeysCacheAtAdd = new List<string>(32);
 
         public bool Add(Type type, string name, object instance)
         {
             var namedObject = new NamedObject(name ?? string.Empty, instance);
-            var types = new List<Type>(type.GetInterfaces());
+            var keys = _tempKeysCacheAtAdd;
+
+            keys.Clear();
+            keys.Add(type.FullName);
+            keys.AddRange(type.GetInterfaces().Select(e => e.FullName).Where(n => !n.StartsWith("System.")));
+
+            var baseType = type.BaseType;
             var objectType = InternalCache.ObjectType;
 
-            while (type != objectType)
+            while (baseType != objectType)
             {
-                types.Add(type);
-                type = type.BaseType;
+                var fullName = baseType.FullName;
+                if (fullName.StartsWith("System."))
+                {
+                    break;
+                }
+                keys.Add(fullName);
+                baseType = baseType.BaseType;
             }
-
-            var keys = types.Select(t => t.FullName).Where(n => !n.StartsWith("System."));
-
+            
             foreach (var key in keys)
             {
                 if (mapping.ContainsKey(key))
@@ -36,7 +46,7 @@ namespace Jack.Managed.Util
                 }
                 else
                 {
-                    mapping.Add(key, new List<NamedObject>(2) { namedObject });
+                    mapping.Add(key, new List<NamedObject>(1) { namedObject });
                 }
             }
             return true;
