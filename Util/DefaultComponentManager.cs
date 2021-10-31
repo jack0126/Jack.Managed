@@ -13,6 +13,11 @@ namespace Jack.Managed.Util
 
         public bool Add(Type type, string name, object instance)
         {
+            if (Find(type, name) != null)
+            {
+                return false;
+            }
+
             var keys = _tempKeysCacheAtAdd;
 
             keys.Clear();
