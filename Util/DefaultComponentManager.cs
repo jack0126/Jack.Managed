@@ -22,24 +22,20 @@ namespace Jack.Managed.Util
             var keys = keysCache;
             keys.Clear();
             keys.Add(type.FullName);
-
-            var NotComponentAttributeType = InternalCache.NotComponentAttributeType;
-            keys.AddRange(type.GetInterfaces().Where(t => !t.IsDefined(NotComponentAttributeType, false)).Select(e => e.FullName).Where(n => !n.StartsWith("System.")));
+            
+            keys.AddRange(type.GetInterfaces().Select(e => e.FullName).Where(n => !n.StartsWith("System.")));
 
             var baseType = type.BaseType;
             var objectType = InternalCache.ObjectType;
 
             while (baseType != objectType)
             {
-                if (!baseType.IsDefined(NotComponentAttributeType, false))
+                var fullName = baseType.FullName;
+                if (fullName.StartsWith("System."))
                 {
-                    var fullName = baseType.FullName;
-                    if (fullName.StartsWith("System."))
-                    {
-                        break;
-                    }
-                    keys.Add(fullName);
+                    break;
                 }
+                keys.Add(fullName);
                 baseType = baseType.BaseType;
             }
 
