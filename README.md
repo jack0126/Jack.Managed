@@ -22,17 +22,22 @@ namespace Demo
     }
   
   }
+  
   [Component]
+  
   public class TestComponent
   {
   
     public string Msg { get; set; } = “this is message!”；
     
   }
+  
   [Component]
+  
   public class TestComponent2 : IComponentInitializer
   
   {
+  
     [Autowired]
     public TestComponent Tc { get; set; }
     
