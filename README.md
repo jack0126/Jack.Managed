@@ -3,7 +3,6 @@
 #仿 spring-boot设计模式编程的工具类
 
 using System;
-
 using Jack.Managed;
 
 namespace Demo
@@ -33,20 +32,14 @@ namespace Demo
   }
   
   [Component]
-  
   public class TestComponent2 : IComponentInitializer
-  
   {
   
     [Autowired]
     public TestComponent Tc { get; set; }
-    
     public void ComponentInitializer()
-    
     {
-    
       Console.WriteLine(Tc.Msg);
-      
     }
   
   }
