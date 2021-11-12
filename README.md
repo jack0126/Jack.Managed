@@ -3,6 +3,7 @@
 #仿 spring-boot设计模式编程的工具类
 
 using System;
+
 using Jack.Managed;
 
 namespace Demo
@@ -12,7 +13,6 @@ namespace Demo
   [AutoManagedComponents]
   
   class Demo
-  
   {
   
     static void Main(string[]args)
@@ -32,6 +32,7 @@ namespace Demo
   }
   
   [Component]
+  
   public class TestComponent2 : IComponentInitializer
   {
   
