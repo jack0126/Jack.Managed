@@ -29,7 +29,7 @@ namespace Demo
   public class TestComponent
   {
   
-    public string Msg { get; set; } = “this is message!”；
+    public string Msg { get; set; } = “this is a message!”；
     
   }
   
